@@ -1,4 +1,5 @@
 var prompt = require('prompt-sync')();
+const tickets = [];
 const trips= [
     {
         id: 1,
@@ -239,4 +240,12 @@ function showAllTrips() {
         Places disponibles : ${trips[i].availableSeats}
         ===========================`);
     }
+}
+function findTrip(id) {
+    for (let i = 0; i < trips.length; i++) {
+        if (id == trips[i].id) {
+            return trips[i]
+        }
+    }
+    return null
 }

@@ -1,3 +1,4 @@
+var prompt = require('prompt-sync')();
 const trips = [
     {
         id: 1,
@@ -180,16 +181,66 @@ const trips = [
         availableSeats: 50
     }
 ];
-function showAllTrips() {
-    console.log("=== TRAJETS DISPONIBLES ===");
+const tickets = [];
+/*function buyTickets() {
+    
+    nom = prompt("Entrer le Nom du passager :");
+    Identifiant = prompt("Entrer l'Identifiant du trajet:");
     for (let i = 0; i < trips.length; i++) {
-        console.log(`
-        #${trips[i].id} ${trips[i].departure} → ${trips[i].destination}
-        Départ : ${trips[i].departureTime}
-        Arrivée : ${trips[i].arrivalTime}
-        Prix : ${trips[i].price} DH
-        Places disponibles : ${trips[i].availableSeats}
-        ===========================`);
+        if (Identifiant == trips[i].id) {
+            if (trips[i].availableSeats > 0) {
+                let user = {
+                    id: tickets.length + 1,
+                    passengerName: nom,
+                    tripId: trips[i].id,
+                    seatNumber: 51 - trips[i].availableSeats,
+                    price: trips[i].price
+                }
+                tickets[tickets.length] = user
+                trips[i].availableSeats = trips[i].availableSeats - 1
+                break
+            }
+        }
     }
+    console.log(tickets);
 }
-showAllTrips()
+buyTickets()*/
+
+
+function findTrip(id) {
+    for (let i = 0; i < trips.length; i++) {
+        if (id == trips[i].id) {
+            return trips[i]
+        }
+    }
+    return null
+}
+function creatTicket(nom, trajet) {
+    let user = {
+        id: tickets.length + 1,
+        passengerName: nom,
+        tripId: trajet.id,
+        seatNumber: 51 - trajet.availableSeats,
+        price: trajet.price
+    }
+    tickets[tickets.length] = user
+    return user
+}
+function buyTickets(findTrip,creatTicket){
+   let nom = prompt("Entrer le Nom du passager :");
+   let Identifiant = prompt("Entrer l'Identifiant du trajet:");
+    let trip = findTrip(Identifiant)
+    if(trip==null){
+        console.log('Trajet introuvable');
+        return;
+    }
+    if (trip.availableSeats <= 0) {
+        console.log("Aucune place disponible");
+        return;
+    }
+    let ticket = creatTicket(nom, trip);
+    trip.availableSeats--;
+    console.log("Ticket acheté :", ticket);
+}
+
+buyTickets(findTrip,creatTicket)
