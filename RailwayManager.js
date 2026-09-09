@@ -312,4 +312,9 @@ function findTicket(id){
 function increaseSeat(trip) {
     trip.availableSeats++;
 }
-
+function deleteTicket(ticketIndex){
+    for(let i=ticketIndex;i<tickets.length-1;i++){
+       tickets[i] = tickets[i + 1];
+    }
+    tickets.length=tickets.length-1;
+}
