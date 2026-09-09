@@ -320,10 +320,15 @@ function increaseSeat(trip) {
     trip.availableSeats++;
 }
 function deleteTicket(ticketIndex) {
-    for (let i = ticketIndex; i < tickets.length - 1; i++) {
-        tickets[i] = tickets[i + 1];
+    for (let i = 0; i < tickets.length - 1; i++) {
+        if (tickets[i].id == ticketIndex) {
+            for (let j = 1; j < tickets.length - 1; j++) {
+                tickets[j] = tickets[j + 1]
+            }
+            tickets.length = tickets.length - 1;
+            return;
+        }
     }
-    tickets.length = tickets.length - 1;
 }
 function cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat) {
     let Identifiant = prompt("Entrer l'Identifiant de votre ticket :");
@@ -332,10 +337,10 @@ function cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat) {
         console.log("Ticket introuvable");
         return;
     }
+
     let trip = findTrip(ticket.tripId);
     increaseSeat(trip);
-    let ticketIndex = findTicket(Identifiant);
-    deleteTicket(ticketIndex);
+    deleteTicket(Identifiant);
     console.log("Ticket supprimé avec succès.");
 }
 function findTravlerByName(nom) {
@@ -369,9 +374,9 @@ function sortTrips(showAllTrips) {
     for (let i = 0; i < trips.length; i++) {
         for (let j = 0; j < trips.length - 1 - i; j++) {
             if (trips[j].price > trips[j + 1].price) {
-                let tepm = trips[j].price;
-                trips[j].price = trips[j + 1].price;
-                trips[j + 1].price = tepm;
+                let tepm = trips[j];
+                trips[j]= trips[j + 1];
+                trips[j + 1] = tepm;
             }
         }
     }
@@ -393,6 +398,11 @@ function totalRevenue() {
 
 }
 function bestSoldTrip() {
+    if(tickets.length==0){
+        console.log('Aucun ticket vendu');
+        return
+        
+    }
     let maxTickets = 0;
     let bestTripId = null;
 
