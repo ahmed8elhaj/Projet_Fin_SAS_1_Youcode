@@ -1,39 +1,5 @@
 var prompt = require('prompt-sync')();
-const tickets = [{
-    id: 1,
-    passengerName: "Ahmed",
-    tripId: 2,
-    seatNumber: 1,
-    price: 90
-},
-{
-    id: 2,
-    passengerName: "Sara",
-    tripId: 8,
-    seatNumber: 2,
-    price: 40
-},
-{
-    id: 3,
-    passengerName: "Youssef",
-    tripId: 3,
-    seatNumber: 1,
-    price: 140
-},
-{
-    id: 4,
-    passengerName: "Amina",
-    tripId: 5,
-    seatNumber: 3,
-    price: 110
-},
-{
-    id: 5,
-    passengerName: "Karim",
-    tripId: 2,
-    seatNumber: 4,
-    price: 90
-}];
+const tickets = [];
 const trips = [
     {
         id: 1,
@@ -230,6 +196,7 @@ do {
     console.log("5. Rechercher un ticket");
     console.log("6. Filtrer les trajets");
     console.log("7. Trier les trajets");
+    console.log("8. Statistique");
     console.log("0. Quitter");
     choix = +prompt("Votre choix :");
 
@@ -253,13 +220,16 @@ do {
             filterByCity()
             break;
         case 7:
-
+            sortTrips(showAllTrips)
+            break;
+        case 8:
+            totalNumberOfTickets()
+            totalRevenue()
+            bestSoldTrip();
             break;
         default:
             console.log('Mercie pour votre viste. ');
             break;
-
-
     }
 } while (choix !== 0);
 
@@ -394,4 +364,53 @@ function filterByCity() {
     if (!found) {
         console.log("Ville introuvable");
     }
+}
+function sortTrips(showAllTrips) {
+    for (let i = 0; i < trips.length; i++) {
+        for (let j = 0; j < trips.length - 1 - i; j++) {
+            if (trips[j].price > trips[j + 1].price) {
+                let tepm = trips[j].price;
+                trips[j].price = trips[j + 1].price;
+                trips[j + 1].price = tepm;
+            }
+        }
+    }
+    showAllTrips()
+}
+function totalNumberOfTickets() {
+    let total = 0;
+    for (let i = 0; i < tickets.length; i++) {
+        total++;
+    }
+    console.log(`Nombre total de tickets : ${total}`);
+}
+function totalRevenue() {
+    let somme = 0;
+    for (let i = 0; i < tickets.length; i++) {
+        somme = somme + tickets[i].price;
+    }
+    console.log(`Chiffre d'affaires total : ${somme} DH`);
+
+}
+function bestSoldTrip() {
+    let maxTickets = 0;
+    let bestTripId = null;
+
+    for (let i = 0; i < trips.length; i++) {
+        let count = 0;
+        for (let j = 0; j < tickets.length; j++) {
+            if (tickets[j].tripId == trips[i].id) {
+                count++;
+            }
+        }
+        if (count > maxTickets) {
+            maxTickets = count;
+            bestTripId = trips[i].id;
+        }
+    }
+    let trip = findTrip(bestTripId);
+
+    console.log(`Trajet le plus vendu :
+${trip.departure} → ${trip.destination}
+${maxTickets} tickets vendus`);
 }
