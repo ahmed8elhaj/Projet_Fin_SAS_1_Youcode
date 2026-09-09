@@ -1,5 +1,6 @@
 var prompt = require('prompt-sync')();
 const tickets = [];
+let nextTicketId = 1;
 const trips = [
     {
         id: 1,
@@ -253,16 +254,37 @@ function findTrip(id) {
     }
     return null
 }
+function getAvailableSeat(tripId) {
+    for (let seat = 1; seat <= 50; seat++) {
+        let used = false;
+        for (let i = 0; i < tickets.length; i++) {
+            if (
+                tickets[i].tripId == tripId &&
+                tickets[i].seatNumber == seat
+            ) {
+                used = true;
+                break;
+            }
+        }
+        if (used == false) {
+            return seat;
+        }
+    }
+    return null;
+}
 function creatTicket(nom, trajet) {
     let user = {
-        id: tickets.length + 1,
+        id: nextTicketId,
         passengerName: nom,
         tripId: trajet.id,
-        seatNumber: 51 - trajet.availableSeats,
+        seatNumber: getAvailableSeat(trajet.id),
         price: trajet.price
     }
-    tickets[tickets.length] = user
-    return user
+
+    nextTicketId++;
+
+    tickets[tickets.length] = user;
+    return user;
 }
 function decreaseSeat(trip) {
     trip.availableSeats--;
@@ -319,17 +341,18 @@ function findTicket(id) {
 function increaseSeat(trip) {
     trip.availableSeats++;
 }
-function deleteTicket(ticketIndex) {
-    for (let i = 0; i < tickets.length - 1; i++) {
-        if (tickets[i].id == ticketIndex) {
-            for (let j = 1; j < tickets.length - 1; j++) {
-                tickets[j] = tickets[j + 1]
+function deleteTicket(ticketId) {
+    for (let i = 0; i < tickets.length; i++) {
+        if (tickets[i].id == ticketId) {
+            for (let j = i; j < tickets.length - 1; j++) {
+                tickets[j] = tickets[j + 1];
             }
             tickets.length = tickets.length - 1;
             return;
         }
     }
 }
+
 function cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat) {
     let Identifiant = prompt("Entrer l'Identifiant de votre ticket :");
     let ticket = findTicket(Identifiant);
