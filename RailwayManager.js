@@ -202,10 +202,9 @@ console.log("0. Quitter");
 switch (choix) {
     case 1:
        showAllTrips()
-        
         break;
     case 2:
-        
+        buyTickets(findTrip,creatTicket,decreaseSeat)
         break;
     case 3:
         
@@ -263,12 +262,12 @@ function creatTicket(nom, trajet) {
 function decreaseSeat(trip) {
     trip.availableSeats--;
 }
-function buyTickets(findTrip,creatTicket,decreaseSeat){
-   let nom = prompt("Entrer le Nom du passager :");
-   let Identifiant = prompt("Entrer l'Identifiant du trajet:");
-    let trip = findTrip(Identifiant)
-    if(trip==null){
-        console.log('Trajet introuvable');
+function buyTickets(findTrip, creatTicket, decreaseSeat) {
+    let nom = prompt("Entrer le Nom du passager :");
+    let Identifiant = prompt("Entrer l'Identifiant du trajet:");
+    let trip = findTrip(Identifiant);
+    if (trip == null) {
+        console.log("Trajet introuvable");
         return;
     }
     if (trip.availableSeats <= 0) {
@@ -277,5 +276,16 @@ function buyTickets(findTrip,creatTicket,decreaseSeat){
     }
     let ticket = creatTicket(nom, trip);
     decreaseSeat(trip);
-    console.log("Ticket acheté :", ticket);
+    ticketDisplayPurchase(ticket, trip);
+}
+function ticketDisplayPurchase(ticket, trip) {
+    console.log(`
+Ticket acheté avec succès.
+
+Ticket #${ticket.id}
+Passager : ${ticket.passengerName}
+Trajet : ${trip.departure} → ${trip.destination}
+Place : ${ticket.seatNumber}
+Prix : ${ticket.price} DH
+`);
 }

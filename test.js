@@ -242,5 +242,17 @@ function buyTickets(findTrip,creatTicket){
     trip.availableSeats--;
     console.log("Ticket acheté :", ticket);
 }
-
 buyTickets(findTrip,creatTicket)
+
+
+function ticketDisplayPurchase(ticket, trip) {
+    console.log(`
+Ticket acheté avec succès.
+
+Ticket #${ticket.id}
+Passager : ${ticket.passengerName}
+Trajet : ${trip.departure} → ${trip.destination}
+Place : ${ticket.seatNumber}
+Prix : ${ticket.price} DH
+`);
+}
