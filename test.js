@@ -1,5 +1,4 @@
-var prompt = require('prompt-sync')();
-const trips= [
+const trips = [
     {
         id: 1,
         departure: "Safi",
@@ -181,53 +180,6 @@ const trips= [
         availableSeats: 50
     }
 ];
-do
-{console.log(`
-=================================
-        RAILWAY MANAGER
-=================================
-`);
-
-console.log("1. Afficher les trajets");
-console.log("2. Acheter un ticket");
-console.log("3. Afficher les tickets");
-console.log("4. Annuler un ticket");
-console.log("5. Rechercher un ticket");
-console.log("6. Filtrer les trajets");
-console.log("7. Trier les trajets");
-console.log("0. Quitter");
- choix = +prompt("Votre choix :");
-
-switch (choix) {
-    case 1:
-       showAllTrips()
-        
-        break;
-    case 2:
-        
-        break;
-    case 3:
-        
-        break;
-    case 4:
-        
-        break;
-    case 5:
-        
-        break;
-    case 6:
-        
-        break;
-    case 7:
-       
-        break;
-    default:
-        console.log('Mercie pour votre viste. ');
-        break;
-
-
-}}while (choix !== 0);
-
 function showAllTrips() {
     console.log("=== TRAJETS DISPONIBLES ===");
     for (let i = 0; i < trips.length; i++) {
@@ -240,3 +192,4 @@ function showAllTrips() {
         ===========================`);
     }
 }
+showAllTrips()
