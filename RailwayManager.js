@@ -263,3 +263,19 @@ function creatTicket(nom, trajet) {
 function decreaseSeat(trip) {
     trip.availableSeats--;
 }
+function buyTickets(findTrip,creatTicket,decreaseSeat){
+   let nom = prompt("Entrer le Nom du passager :");
+   let Identifiant = prompt("Entrer l'Identifiant du trajet:");
+    let trip = findTrip(Identifiant)
+    if(trip==null){
+        console.log('Trajet introuvable');
+        return;
+    }
+    if (trip.availableSeats <= 0) {
+        console.log("Aucune place disponible");
+        return;
+    }
+    let ticket = creatTicket(nom, trip);
+    decreaseSeat(trip);
+    console.log("Ticket acheté :", ticket);
+}
