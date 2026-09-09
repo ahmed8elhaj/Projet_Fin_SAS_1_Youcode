@@ -1,6 +1,40 @@
 var prompt = require('prompt-sync')();
-const tickets = [];
-const trips= [
+const tickets = [{
+    id: 1,
+    passengerName: "Ahmed",
+    tripId: 2,
+    seatNumber: 1,
+    price: 90
+},
+{
+    id: 2,
+    passengerName: "Sara",
+    tripId: 8,
+    seatNumber: 2,
+    price: 40
+},
+{
+    id: 3,
+    passengerName: "Youssef",
+    tripId: 3,
+    seatNumber: 1,
+    price: 140
+},
+{
+    id: 4,
+    passengerName: "Amina",
+    tripId: 5,
+    seatNumber: 3,
+    price: 110
+},
+{
+    id: 5,
+    passengerName: "Karim",
+    tripId: 2,
+    seatNumber: 4,
+    price: 90
+}];
+const trips = [
     {
         id: 1,
         departure: "Safi",
@@ -182,51 +216,52 @@ const trips= [
         availableSeats: 50
     }
 ];
-do
-{console.log(`
+do {
+    console.log(`
 =================================
         RAILWAY MANAGER
 =================================
 `);
 
-console.log("1. Afficher les trajets");
-console.log("2. Acheter un ticket");
-console.log("3. Afficher les tickets");
-console.log("4. Annuler un ticket");
-console.log("5. Rechercher un ticket");
-console.log("6. Filtrer les trajets");
-console.log("7. Trier les trajets");
-console.log("0. Quitter");
- choix = +prompt("Votre choix :");
+    console.log("1. Afficher les trajets");
+    console.log("2. Acheter un ticket");
+    console.log("3. Afficher les tickets");
+    console.log("4. Annuler un ticket");
+    console.log("5. Rechercher un ticket");
+    console.log("6. Filtrer les trajets");
+    console.log("7. Trier les trajets");
+    console.log("0. Quitter");
+    choix = +prompt("Votre choix :");
 
-switch (choix) {
-    case 1:
-       showAllTrips()
-        break;
-    case 2:
-        buyTickets(findTrip,creatTicket,decreaseSeat)
-        break;
-    case 3:
-        showAllTickets(findTrip)
-        break;
-    case 4:
-        
-        break;
-    case 5:
-        
-        break;
-    case 6:
-        
-        break;
-    case 7:
-       
-        break;
-    default:
-        console.log('Mercie pour votre viste. ');
-        break;
+    switch (choix) {
+        case 1:
+            showAllTrips()
+            break;
+        case 2:
+            buyTickets(findTrip, creatTicket, decreaseSeat)
+            break;
+        case 3:
+            showAllTickets(findTrip)
+            break;
+        case 4:
+            cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat, findTicketIndex)
+            break;
+        case 5:
+
+            break;
+        case 6:
+
+            break;
+        case 7:
+
+            break;
+        default:
+            console.log('Mercie pour votre viste. ');
+            break;
 
 
-}}while (choix !== 0);
+    }
+} while (choix !== 0);
 
 function showAllTrips() {
     console.log("=== TRAJETS DISPONIBLES ===");
@@ -303,20 +338,30 @@ Prix : ${tickets[i].price} DH
         `);
     }
 }
-function findTicket(id){
-    for(let i=0;i<tickets.length;i++){
-        if(tickets[i].tripId==id)
-            return tickets[i].id
+function findTicket(id) {
+    for (let i = 0; i < tickets.length; i++) {
+        if (tickets[i].id == id) {
+            return tickets[i];
+        }
     }
+    return null;
 }
 function increaseSeat(trip) {
     trip.availableSeats++;
 }
-function deleteTicket(ticketIndex){
-    for(let i=ticketIndex;i<tickets.length-1;i++){
-       tickets[i] = tickets[i + 1];
+function deleteTicket(ticketIndex) {
+    for (let i = ticketIndex; i < tickets.length - 1; i++) {
+        tickets[i] = tickets[i + 1];
     }
-    tickets.length=tickets.length-1;
+    tickets.length = tickets.length - 1;
+}
+function findTicket(id) {
+    for (let i = 0; i < tickets.length; i++) {
+        if (tickets[i].id == id) {
+            return tickets[i];
+        }
+    }
+    return null;
 }
 function findTicketIndex(id) {
     for (let i = 0; i < tickets.length; i++) {
@@ -325,5 +370,18 @@ function findTicketIndex(id) {
         }
     }
     return -1;
+}
+function cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat) {
+    let Identifiant = prompt("Entrer l'Identifiant de votre ticket :");
+    let ticket = findTicket(Identifiant);
+    if (ticket == null) {
+        console.log("Ticket introuvable");
+        return;
+    }
+    let trip = findTrip(ticket.tripId);
+    increaseSeat(trip);
+    let ticketIndex = findTicketIndex(Identifiant);
+    deleteTicket(ticketIndex);
+    console.log("Ticket supprimé avec succès.");
 }
 
