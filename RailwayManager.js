@@ -235,19 +235,19 @@ do {
 
     switch (choix) {
         case 1:
-            showAllTrips()
+            showAllTrips();
             break;
         case 2:
-            buyTickets(findTrip, creatTicket, decreaseSeat)
+            buyTickets(findTrip, creatTicket, decreaseSeat);
             break;
         case 3:
-            showAllTickets(findTrip)
+            showAllTickets(findTrip);
             break;
         case 4:
-            cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat, findTicketIndex)
+            cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat);
             break;
         case 5:
-
+            findTravlerByName();
             break;
         case 6:
 
@@ -355,22 +355,6 @@ function deleteTicket(ticketIndex) {
     }
     tickets.length = tickets.length - 1;
 }
-function findTicket(id) {
-    for (let i = 0; i < tickets.length; i++) {
-        if (tickets[i].id == id) {
-            return tickets[i];
-        }
-    }
-    return null;
-}
-function findTicketIndex(id) {
-    for (let i = 0; i < tickets.length; i++) {
-        if (tickets[i].id == id) {
-            return i;
-        }
-    }
-    return -1;
-}
 function cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat) {
     let Identifiant = prompt("Entrer l'Identifiant de votre ticket :");
     let ticket = findTicket(Identifiant);
@@ -380,8 +364,21 @@ function cancelTicket(findTicket, findTrip, deleteTicket, increaseSeat) {
     }
     let trip = findTrip(ticket.tripId);
     increaseSeat(trip);
-    let ticketIndex = findTicketIndex(Identifiant);
+    let ticketIndex = findTicket(Identifiant);
     deleteTicket(ticketIndex);
     console.log("Ticket supprimé avec succès.");
 }
-
+function findTravlerByName(nom) {
+    nom = prompt("Entrer votre nom:");
+    for (let i = 0; i < tickets.length; i++) {
+        let trip = findTrip(tickets[i].tripId);
+        if (tickets[i].passengerName == nom) {
+            console.log(`
+Ticket #${tickets[i].id}
+Passager : ${tickets[i].passengerName}
+Trajet : ${trip.departure} → ${trip.destination}
+Place : ${tickets[i].seatNumber}
+Prix : ${tickets[i].price} DH`)
+        }
+    }
+}
