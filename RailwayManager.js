@@ -207,7 +207,7 @@ switch (choix) {
         buyTickets(findTrip,creatTicket,decreaseSeat)
         break;
     case 3:
-        
+        showAllTickets(findTrip)
         break;
     case 4:
         
@@ -288,4 +288,18 @@ Trajet : ${trip.departure} → ${trip.destination}
 Place : ${ticket.seatNumber}
 Prix : ${ticket.price} DH
 `);
+}
+function showAllTickets(findTrip) {
+    console.log("=== TICKETS ===");
+    for (let i = 0; i < tickets.length; i++) {
+        let trip = findTrip(tickets[i].tripId);
+        console.log(`
+Ticket #${tickets[i].id}
+Passager : ${tickets[i].passengerName}
+Trajet : ${trip.departure} → ${trip.destination}
+Place : ${tickets[i].seatNumber}
+Prix : ${tickets[i].price} DH
+===========================
+        `);
+    }
 }

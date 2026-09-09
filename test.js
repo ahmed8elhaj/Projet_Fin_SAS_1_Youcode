@@ -245,14 +245,17 @@ function buyTickets(findTrip,creatTicket){
 buyTickets(findTrip,creatTicket)
 
 
-function ticketDisplayPurchase(ticket, trip) {
+function ticketDisplayPurchase(tickets[i], trip) {
     console.log(`
 Ticket acheté avec succès.
 
-Ticket #${ticket.id}
-Passager : ${ticket.passengerName}
+Ticket #${tickets[i].id}
+Passager : ${tickets[i].passengerName}
 Trajet : ${trip.departure} → ${trip.destination}
-Place : ${ticket.seatNumber}
-Prix : ${ticket.price} DH
+Place : ${tickets[i].seatNumber}
+Prix : ${tickets[i].price} DH
 `);
 }
+
+
+
