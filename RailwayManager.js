@@ -260,3 +260,6 @@ function creatTicket(nom, trajet) {
     tickets[tickets.length] = user
     return user
 }
+function decreaseSeat(trip) {
+    trip.availableSeats--;
+}
