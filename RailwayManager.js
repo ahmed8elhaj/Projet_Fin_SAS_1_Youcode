@@ -318,3 +318,12 @@ function deleteTicket(ticketIndex){
     }
     tickets.length=tickets.length-1;
 }
+function findTicketIndex(id) {
+    for (let i = 0; i < tickets.length; i++) {
+        if (tickets[i].id == id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
