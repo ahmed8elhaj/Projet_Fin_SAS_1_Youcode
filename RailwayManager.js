@@ -250,7 +250,7 @@ do {
             findTravlerByName();
             break;
         case 6:
-
+            filterByCity()
             break;
         case 7:
 
@@ -380,5 +380,18 @@ Trajet : ${trip.departure} → ${trip.destination}
 Place : ${tickets[i].seatNumber}
 Prix : ${tickets[i].price} DH`)
         }
+    }
+}
+function filterByCity() {
+    let city = prompt("Entrer la ville de départ:");
+    let found = false;
+    for (let i = 0; i < trips.length; i++) {
+        if (trips[i].departure == city) {
+            console.log(`${trips[i].departure} → ${trips[i].destination} : ${trips[i].price} DH`);
+            found = true;
+        }
+    }
+    if (!found) {
+        console.log("Ville introuvable");
     }
 }
