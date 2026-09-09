@@ -303,3 +303,10 @@ Prix : ${tickets[i].price} DH
         `);
     }
 }
+function findTicket(id){
+    for(let i=0;i<tickets.length;i++){
+        if(tickets[i].tripId==id)
+            return tickets[i].id
+    }
+}
+
