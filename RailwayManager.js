@@ -309,4 +309,7 @@ function findTicket(id){
             return tickets[i].id
     }
 }
+function increaseSeat(trip) {
+    trip.availableSeats++;
+}
 
