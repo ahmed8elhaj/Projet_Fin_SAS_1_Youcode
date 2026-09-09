@@ -249,3 +249,14 @@ function findTrip(id) {
     }
     return null
 }
+function creatTicket(nom, trajet) {
+    let user = {
+        id: tickets.length + 1,
+        passengerName: nom,
+        tripId: trajet.id,
+        seatNumber: 51 - trajet.availableSeats,
+        price: trajet.price
+    }
+    tickets[tickets.length] = user
+    return user
+}
